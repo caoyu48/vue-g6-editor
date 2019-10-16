@@ -1,4 +1,4 @@
-![https://github.com/caoyu48/vue-g6-editor/blob/master/1.gif]
+![效果图](https://github.com/caoyu48/vue-g6-editor/blob/master/1.gif)
 # vue-g6-editor
 
 demo地址：http://62.234.69.136/
