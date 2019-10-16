@@ -1,9 +1,9 @@
 {
   "name": "vue-g6-editor",
-  "version": "0.0yy.1",
+  "version": "0.0.1",
   "description": "vue+g6+element可视化编辑器",
   "keyword": "vue g6 g6-editor",
-  "author": "caoyu48@163.com",
+  "author": "280196641@qq.com",
   "private": false,
   "license": "MIT",
   "scripts": {
