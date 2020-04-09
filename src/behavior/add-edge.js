@@ -1,6 +1,8 @@
 
-import eventBus from "@/utils/eventBus";
-import { uniqueId } from '@/utils'
+// import { transform } from '@antv/matrix-util';
+import eventBus from "../utils/eventBus";
+import { uniqueId } from '../utils'
+
 let startPoint = null
 let startItem = null
 let endPoint = {}
@@ -19,26 +21,26 @@ export default {
         const item = e.item
         if (item && item.getType() === 'node') {
             const group = item.getContainer()
-            if (e.target._attrs.isInPoint) {
-                const children = group._cfg.children
+            if (e.target.attrs.isInPoint) {
+                const children = group.cfg.children
                 children.map(child => {
-                    if (child._attrs.isInPointOut && child._attrs.parent === e.target._attrs.id) {
+                    if (child.attrs.isInPointOut && child.attrs.parent === e.target.attrs.id) {
                         activeItem = child
                     }
                 })
                 curInPoint = e.target
-            } else if (e.target._attrs.isInPointOut) {
+            } else if (e.target.attrs.isInPointOut) {
                 activeItem = e.target
-                const children = group._cfg.children
+                const children = group.cfg.children
                 children.map(child => {
-                    if (child._attrs.isInPoint && child._attrs.id === e.target._attrs.parent) {
+                    if (child.attrs.isInPoint && child.attrs.id === e.target.attrs.parent) {
                         curInPoint = child
                     }
                 })
             }
             if (activeItem) {
-                const endX = parseInt(curInPoint._attrs.x)
-                const endY = parseInt(curInPoint._attrs.y)
+                const endX = parseInt(curInPoint.attrs.x)
+                const endY = parseInt(curInPoint.attrs.y)
                 endPoint = { x: endX, y: endY };
                 if (this.edge) {
                     this.graph.removeItem(this.edge);
@@ -65,15 +67,15 @@ export default {
         }
         this.graph.find("node", node => {
             const group = node.get('group')
-            const children = group._cfg.children
+            const children = group.cfg.children
             children.map(child => {
-                if (child._attrs.isInPointOut) {
+                if (child.attrs.isInPointOut) {
                     child.attr("opacity", "0")
                 }
-                if (child._attrs.isInPoint) {
+                if (child.attrs.isInPoint) {
                     child.attr("opacity", "0")
                 }
-                if (child._attrs.isOutPoint) {
+                if (child.attrs.isOutPoint) {
                     child.attr("opacity", "0")
                     child.attr("fill", "#fff")
                 }
@@ -96,18 +98,18 @@ export default {
         if (!startPoint) {
             this.graph.find("node", node => {
                 const group = node.get('group')
-                const children = group._cfg.children
+                const children = group.cfg.children
                 children.map(child => {
-                    if (child._attrs.isInPointOut) {
+                    if (child.attrs.isInPointOut) {
                         child.attr("opacity", "0.3")
                     }
-                    if (child._attrs.isInPoint) {
+                    if (child.attrs.isInPoint) {
                         child.attr("opacity", "1")
                     }
                 })
             })
-            const startX = parseInt(e.target._attrs.x)
-            const startY = parseInt(e.target._attrs.y)
+            const startX = parseInt(e.target.attrs.x)
+            const startY = parseInt(e.target.attrs.y)
             startPoint = { x: startX, y: startY };
             startItem = item
             this.edge = this.graph.addItem('edge', {
@@ -131,12 +133,16 @@ export default {
     onMouseover(e) {
         const item = e.item
         if (item && item.getType() === 'node') {
-            if (e.target._attrs.isInPointOut && !this.hasTran) {
+            if (e.target.attrs.isInPointOut && !this.hasTran) {
                 this.hasTran = true
-                e.target.transform([
-                    ['t', 0, 3],
-                    ['s', 1.2, 1.2],
-                ])
+                // const m = e.target.getTotalMatrix();
+                // const m2 = transform(m, [
+                //     ['t', 0, 3],
+                //     ['s', 1.2, 1.2],
+                // ]);
+                // console.log(m)
+                // console.log(m2)
+                // e.target.setMatrix(m2)
             }
             this.graph.paint()
         }
@@ -144,9 +150,9 @@ export default {
     onMouseleave() {
         this.graph.find("node", node => {
             const group = node.get('group')
-            const children = group._cfg.children
+            const children = group.cfg.children
             children.map(child => {
-                if (child._attrs.isInPointOut) {
+                if (child.attrs.isInPointOut) {
                     child.resetMatrix()
                 }
             })

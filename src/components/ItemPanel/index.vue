@@ -6,7 +6,7 @@
 
 <script>
 import Item from "./item";
-import eventBus from "@/utils/eventBus";
+import eventBus from "../../utils/eventBus";
 export default {
   components: { Item },
   data() {

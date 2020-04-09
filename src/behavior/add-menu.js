@@ -1,4 +1,4 @@
-import eventBus from "@/utils/eventBus";
+import eventBus from "../utils/eventBus";
 export default {
     getEvents() {
         return {

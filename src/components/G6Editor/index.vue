@@ -28,8 +28,8 @@ import Minimap from "../Minimap";
 import Page from "../Page";
 import Flow from "../Flow"
 import ContextMenu from "../ContextMenu";
-import Editor from "@/components/Base/Editor";
-import command from "@/command";
+import Editor from "../Base/Editor";
+import command from "../../command";
 export default {
   name: "G6Editor",
   components: {

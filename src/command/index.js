@@ -1,4 +1,4 @@
-import { uniqueId } from '@/utils'
+import { uniqueId } from '../utils'
 class command {
     editor = null;
     undoList = []

@@ -18,9 +18,42 @@
 </template>
 
 <script>
-import eventBus from "@/utils/eventBus";
-import okSvg from "@/assets/icons/ok.svg";
-import bgImg from "@/assets/bg.jpg";
+import eventBus from "../../utils/eventBus";
+import okSvg from "../../assets/icons/ok.svg";
+import bgImg from "../../assets/bg.jpg";
+
+/* TODO: 待添加的自定义节点
+ * S-开始节点
+ * E-结束节点
+ * 0-审批节点
+ * 1-抄送节点
+ * 2-分支网关
+ * 3-并行网关
+ * 4-汇聚节点（全部前序通过）
+ * 5-汇聚节点（任意前序通过）
+ * 
+ * 2-分支网关: 单source, 多target, condition需要条件表达式
+ * 3-并行网关: 单source, 多target, condition不需要表达式
+ * 4/5-汇聚节点: 多source, 单target, condition不需要表达式
+ * 
+ * 节点定义示例数据如下：
+ * {
+    name: "双输出节点",
+    label: "双输出节点",
+    size: "170*34",
+    type: "node",
+    x: 0,
+    y: 0,
+    shape: "customNode",
+    color: "#1890ff",
+    image: "https://gw.alipayobjects.com/zos/rmsportal/czNEJAmyDpclFaSucYWB.svg", // 节点类型标记，会同时显示在图像中和
+    stateImage: okSvg, // 状态图片
+    inPoints: [[0, 0.5]], // 输入标记
+    outPoints: [[1, 0.4], [1, 0.6]], // 输出标记
+  }
+ */
+
+// TODO: 节点的具体样式在功能调整完毕后再做调整
 export default {
   data() {
     return {
@@ -103,7 +136,6 @@ export default {
           image:
             "https://gw.alipayobjects.com/zos/rmsportal/czNEJAmyDpclFaSucYWB.svg",
           stateImage: okSvg,
-          inPoints: [[0, 0.5]],
           outPoints: [[1, 0.5]],
           isDoingStart: true
         },
@@ -120,9 +152,22 @@ export default {
             "https://gw.alipayobjects.com/zos/rmsportal/czNEJAmyDpclFaSucYWB.svg",
           stateImage: okSvg,
           inPoints: [[0, 0.5]],
-          outPoints: [[1, 0.5]],
           isDoingEnd: true
-        }
+        },
+        {
+          name: "testNode",
+          label: "testNode",
+          size: "170*34",
+          type: "node",
+          x: 0,
+          y: 0,
+          shape: "testNode",
+          color: "#1890ff",
+          image:
+            "https://gw.alipayobjects.com/zos/rmsportal/czNEJAmyDpclFaSucYWB.svg",
+          inPoints: [[0, 0.5]],
+          isDoingEnd: true
+        },
       ]
     };
   },
@@ -145,7 +190,9 @@ export default {
         const xy = graph.getPointByClient(e.x, e.y);
         data.x = xy.x;
         data.y = xy.y;
-        data.size = item.size.split("*");
+        if (item.size) {
+          data.size = item.size.split("*");
+        }
         data.type = "node";
         this.command.executeCommand("add", [data]);
       }

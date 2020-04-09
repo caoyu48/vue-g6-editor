@@ -1,7 +1,8 @@
-import G6 from "@antv/g6/build/g6";
-import { uniqueId } from '@/utils'
-import openSvg from '@/assets/icons/open.svg'
-import closeSvg from '@/assets/icons/close.svg'
+import G6 from "@antv/g6";
+import { uniqueId } from '../../utils'
+import closeSvg from '../../assets/icons/close.svg'
+
+// TODO: 该节点尚未使用
 const teamNode = {
   init() {
     G6.registerNode("teamNode", {

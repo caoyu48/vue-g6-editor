@@ -1,5 +1,5 @@
-import { uniqueId } from '@/utils';
-import eventBus from "@/utils/eventBus";
+import { uniqueId } from '../../utils';
+import eventBus from "../../utils/eventBus";
 
 export default class Editor {
   constructor() {
@@ -22,6 +22,7 @@ export default class Editor {
     }
   }
   add(type, item) {
+    console.log(item);
     this.graph.add(type, item)
   }
   update(item, model) {

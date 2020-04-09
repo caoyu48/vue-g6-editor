@@ -3,9 +3,10 @@
 </template>
 
 <script>
-import customNode from "./customNode";
+import registerNode from "./registerNode";
 import customEdge from "./customEdge";
 import teamNode from './teamNode'
+
 export default {
   name:'Flow',
   data() {
@@ -18,7 +19,7 @@ export default {
   },
   methods: {
     init() {
-      customNode.init();
+      registerNode();
       customEdge.init();
       teamNode.init();
     }

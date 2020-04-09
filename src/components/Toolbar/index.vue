@@ -76,22 +76,23 @@
       title="多选"
       @click="handleMuiltSelect"
     ></i>
-    <i
+    <!-- <i
       data-command="addGroup"
       class="command iconfont icon-group"
       title="成组"
       :class="addGroup?'':'disable'"
       @click="handleAddGroup"
-    ></i>
-    <i data-command="unGroup" class="command iconfont icon-ungroup disable" title="解组"></i>
+    ></i> -->
+    <!-- <i data-command="unGroup" class="command iconfont icon-ungroup disable" title="解组"></i> -->
     <el-button @click="consoleData" type="primary">控制台输出数据</el-button>
   </div>
 </template>
 
 <script>
-import eventBus from "@/utils/eventBus";
-import Util from "@antv/g6/src/util";
-import { uniqueId, getBox } from "@/utils";
+import * as Util from '@antv/util'
+import { uniqueId, getBox } from "../../utils";
+import eventBus from "../../utils/eventBus";
+
 export default {
   data() {
     return {
@@ -176,7 +177,28 @@ export default {
       }
     },
     getFormatPadding() {
-      return Util.formatPadding(this.graph.get("fitViewPadding"));
+      /**
+       * turn padding into [top, right, bottom, right]
+       * @param  {Number|Array} padding input padding
+       * @return {array} output
+       */
+      function formatPadding(padding) {
+        let top = 0;
+        let left = 0;
+        let right = 0;
+        let bottom = 0;
+
+        if (Util.isNumber(padding) || Util.isString(padding)) {
+          top = left = right = bottom = padding;
+        } else if (Util.isArray(padding)) {
+          top = padding[0];
+          right = !Util.isNil(padding[1]) ? padding[1] : padding[0];
+          bottom = !Util.isNil(padding[2]) ? padding[2] : padding[0];
+          left = !Util.isNil(padding[3]) ? padding[3] : right;
+        }
+        return [ top, right, bottom, left ];
+      }
+      return formatPadding(this.graph.get("fitViewPadding"));
     },
     getViewCenter() {
       const padding = this.getFormatPadding();
@@ -218,7 +240,7 @@ export default {
 
           this.graph.paint();
         });
-      }
+      } 
     },
     handleAutoZoom() {
       this.graph.fitView(20);
@@ -231,17 +253,18 @@ export default {
       this.graph.setMode("mulitSelect");
     },
     handleAddGroup() {
-      //TODO 这部分等阿里更新Group之后添加
-      // const model = {
-      //   id: "group" + uniqueId(),
-      //   title: "新建分组"
-      // };
-      // // this.command.executeCommand("add", "group", model);
-      // this.selectedItem.forEach(item => {
-      //   console.log(item);
+      //TODO 分组功能待开发
+      // const nodes = this.selectedItem.map(item => {
+      //   return item._cfg.id;
       // });
-  
-      //this.getPosition(this.selectedItem);
+      // const model = {
+      //   groupId: "group" + uniqueId(),
+      //   title: "新建分组",
+      //   nodes
+      // };
+
+      // this.command.executeCommand("add", "group", model);
+      // this.getPosition(this.selectedItem);
     },
     getPosition(items) {
       const boxList = [];

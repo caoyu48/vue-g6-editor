@@ -1,5 +1,5 @@
-import G6 from "@antv/g6/build/g6";
-import { uniqueId } from '@/utils'
+import G6 from "@antv/g6";
+import { uniqueId } from '../../utils'
 const MIN_ARROW_SIZE = 3
 
 const customEdge = {
@@ -98,10 +98,10 @@ const customEdge = {
         const halfHeight = lineWidth * 4 / 3;
         const radius = lineWidth * 4;
         const endArrowPath = [
-          ['M', -width, halfHeight],
+          ['M', width, -halfHeight],
           ['L', 0, 0],
-          ['L', -width, -halfHeight],
-          ['A', radius, radius, 0, 0, 1, -width, halfHeight],
+          ['L', width, halfHeight],
+          ['A', radius, radius, 0, 0, 1, width, -halfHeight],
           ['Z']
         ];
         const keyShape = group.addShape('path', {
@@ -112,6 +112,7 @@ const customEdge = {
             lineAppendWidth: 10,
             endArrow: {
               path: endArrowPath,
+              fill: '#b8c3ce',
             }
           }
         });

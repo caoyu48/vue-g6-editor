@@ -6,8 +6,12 @@
 
 
 <script>
-import G6 from "@antv/g6/build/g6";
-import { initBehavors } from "@/behavior";
+import G6 from "@antv/g6";
+import { initBehavors } from "../../behavior";
+
+/* TODO: 流程图的展示模式是否直接使用dagre来进行自动布局？
+*/
+
 export default {
   data() {
     return {
@@ -46,6 +50,12 @@ export default {
         container: "graph-container",
         height: height,
         width: width,
+        groupType: 'rect',
+          groupStyle: {
+          default: {},
+          hover: {},
+          collapse: {},
+        },
         modes: {
           // 支持的 behavior
           default: [
@@ -56,11 +66,12 @@ export default {
             "hover-edge",
             "keyboard",
             "customer-events",
-            "add-menu"
+            "add-menu",
+            "drag-node",
           ],
           mulitSelect: ["mulit-select"],
           addEdge: ["add-edge"],
-          moveNode:[ "drag-item"]
+          // moveNode:[ "drag-item"]
         }
       });
       const { editor, command } = this.$parent;

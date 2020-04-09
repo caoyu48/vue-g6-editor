@@ -41,8 +41,15 @@
 </template>
 
 <script>
-import eventBus from "@/utils/eventBus";
-import Grid from "@antv/g6/build/grid";
+import G6 from '@antv/g6';
+import eventBus from "../../utils/eventBus";
+
+console.log()
+
+const { Grid } = G6;
+
+/* TODO: 为节点添加属性，属性内容由详细设计和接口中确定
+*/
 export default {
   data() {
     return {

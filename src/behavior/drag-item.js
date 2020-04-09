@@ -1,5 +1,7 @@
 import { merge, isString } from 'lodash';
-import eventBus from "@/utils/eventBus";
+import eventBus from "../utils/eventBus";
+
+// TODO: 这个文件现在没有使用到
 const delegateStyle = {
   fill: '#F3F9FF',
   fillOpacity: 0.5,
@@ -26,7 +28,7 @@ export default {
       'mouseup': 'onMouseup',
       // 'node:dragstart': 'onDragStart',
       // 'node:drag': 'onDrag',
-      // 'node:dragend': 'onDragEnd',
+      'node:dragend': 'onDragEnd',
       'canvas:mouseleave': 'onOutOfRange'
     };
   },
@@ -44,11 +46,11 @@ export default {
     // 获取所有选中的元素
     const nodes = graph.findAllByState('node', 'selected');
 
-    const currentNodeId = item.get('id');
+    const currentNodeId = item._cfg.id;
 
     // 当前拖动的节点是否是选中的节点
     const dragNodes = nodes.filter(node => {
-      const nodeId = node.get('id');
+      const nodeId = item._cfg.id;
       return currentNodeId === nodeId;
     });
 
@@ -145,6 +147,9 @@ export default {
     this.nodeEvent = null
     this.graph.setMode('default')
   },
+  onDragEnd(e) {
+    console.log(e)
+  },
   // 若在拖拽时，鼠标移出画布区域，此时放开鼠标无法终止 drag 行为。在画布外监听 mouseup 事件，放开则终止
   onOutOfRange(e) {
     const self = this;
@@ -214,6 +219,7 @@ export default {
           }
         });
       } else if (this.target) {
+        console.log(bbox);
         this.shape = parent.addShape('rect', {
           attrs: {
             width: bbox.width,

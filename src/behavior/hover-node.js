@@ -11,21 +11,21 @@ export default {
         const item = e.item;
         const graph = self.graph;
         const group = item.getContainer()
-        if (e.target._attrs.isOutPointOut || e.target._attrs.isOutPoint) {
+        if (e.target.attrs.isOutPointOut || e.target.attrs.isOutPoint) {
             group.find(g => {
-                if (g._attrs.isInPoint || g._attrs.isOutPoint) {
+                if (g.attrs.isInPoint || g.attrs.isOutPoint) {
                     g.attr("fill", "#fff")
                 }
-                if (g._attrs.isOutPoint) {
-                    if (g._attrs.id === e.target._attrs.parent) {
+                if (g.attrs.isOutPoint) {
+                    if (g.attrs.id === e.target.attrs.parent) {
                         group.find(gr => {
-                            if (gr._attrs.id === g._attrs.id) {
+                            if (gr.attrs.id === g.attrs.id) {
                                 gr.attr('fill', "#1890ff")
                                 gr.attr('opacity',1)
                             }
                         })
                     }
-                    if (g._attrs.id === e.target._attrs.id) {
+                    if (g.attrs.id === e.target.attrs.id) {
                         g.attr("fill", "#1890ff")
                         g.attr('opacity',1)
                     }
@@ -50,7 +50,7 @@ export default {
         const graph = self.graph;
         const group = item.getContainer()
         group.find(g => {
-            if (g._attrs.isInPoint || g._attrs.isOutPoint) {
+            if (g.attrs.isInPoint || g.attrs.isOutPoint) {
                 g.attr("fill", "#fff")
             }
         });
@@ -61,10 +61,10 @@ export default {
         graph.paint();
     },
     onMousedown(e) {
-        if(e.target._attrs.isOutPoint ||e.target._attrs.isOutPointOut){
+        if(e.target.attrs.isOutPoint ||e.target.attrs.isOutPointOut){
             this.graph.setMode('addEdge')
-        }else{
-            this.graph.setMode('moveNode')
+        } else {
+            // this.graph.setMode('moveNode')
         }
     },
 
