@@ -133,10 +133,8 @@ export default {
         if (item && item.getType() === 'node') {
             if (e.target._attrs.isInPointOut && !this.hasTran) {
                 this.hasTran = true
-                e.target.transform([
-                    ['t', 0, 3],
-                    ['s', 1.2, 1.2],
-                ])
+                // 这里是改的地方，用于改变hover时的点的大小(增加5的半径用于突出hover效果)
+                e.target._attrs.r += 5
             }
             this.graph.paint()
         }
